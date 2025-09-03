@@ -65,7 +65,7 @@ jobs:
             echo "Release exists, updating assets"
           else
             gh release create gost-latest \
-              --target gost-latest \
+              --target ${{ github.sha }} \
               --title "GOST Binary Latest" \
               --notes "GOST binary compiled from commit ${{ github.sha }}\n\n- Platform: Linux AMD64\n- Compressed with UPX\n- Build date: ${{ github.event.head_commit.timestamp }}" \
               --repo ${{ github.repository }}
