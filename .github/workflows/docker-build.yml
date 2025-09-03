@@ -76,12 +76,18 @@ jobs:
           git tag -f gost-latest ${{ github.sha }}
           git push origin gost-latest --force
 
+          # 等待3秒确保标签同步到GitHub
+          sleep 3
+
           # 检查 release 是否存在，不存在则创建
           if gh release view gost-latest 2>/dev/null; then
             echo "Release exists, will update assets"
           else
             echo "Release not found, creating new release"
-            gh release create gost-latest gost-latest \
+
+            # 使用--target显式指定标签目标
+            gh release create gost-latest \
+              --target gost-latest \
               --title "GOST Binary Latest" \
               --notes "GOST binary compiled from commit ${{ github.sha }}
           
